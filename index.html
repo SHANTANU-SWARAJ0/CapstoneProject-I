@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SecureCheck — Password Strength Analyzer</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <nav>
+    <a href="#hero" class="logo-wrap">
+      <div class="logo-img" id="logoBox">
+  <img src="" alt="Logo" id="logoImg" style="display:none;"/>
+  <i class="fas fa-shield-halved fallback-icon" id="logoFallback"></i>
+</div>
+      <span class="logo-text">Secure<span>Check</span></span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#checker">Checker</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+
+    <button class="menu-btn" id="menuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  <section id="hero">
+    <div class="section-wrap">
+      <div class="hero-inner">
+
+        <div class="hero-left">
+          <span class="badge"><i class="fas fa-lock"></i> Security Tool</span>
+          <h1>Analyze Your<br/><span class="outline">Password</span><br/>Strength</h1>
+          <p>
+            Our Python-powered engine tests your password against 10+ security rules.
+          </p>
+
+          <div class="stat-row">
+            <div class="stat">
+              <span class="stat-num">10+</span>
+              <span class="stat-label">Security Rules</span>
+            </div>
+
+            <div class="stat">
+              <span class="stat-num">5</span>
+              <span class="stat-label">Strength Levels</span>
+            </div>
+
+            <div class="stat">
+              <span class="stat-num">100%</span>
+              <span class="stat-label">Private & Safe</span>
+            </div>
+          </div>
+
+          <div class="hero-btns">
+            <a href="#checker" class="btn btn-green">
+              <i class="fas fa-shield-halved"></i> Check Now
+            </a>
+
+            <a href="#how" class="btn btn-ghost">How It Works</a>
+          </div>
+        </div>
+
+        <div class="terminal reveal">
+          <div class="term-bar">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+            <span class="term-title">securecheck.py</span>
+          </div>
+
+          <div class="term-body">
+            <div class="term-line">
+              <span class="prompt">$</span>
+              <span class="cmd">python securecheck.py</span>
+            </div>
+
+            <div class="out">Running analysis...</div>
+
+            <div class="strength-demo">
+              <div class="s-label">Very Weak</div>
+              <div class="s-bar"><div class="s-fill weak-fill"></div></div>
+
+              <div class="s-label">Medium</div>
+              <div class="s-bar"><div class="s-fill medium-fill"></div></div>
+
+              <div class="s-label">Strong</div>
+              <div class="s-bar"><div class="s-fill strong-fill"></div></div>
+
+              <div class="s-label">Very Strong</div>
+              <div class="s-bar"><div class="s-fill vstrong-fill"></div></div>
+            </div>
+
+            <div class="out" style="color:var(--green)">
+              ✔ Analysis complete
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="checker">
+    <div class="section-wrap reveal">
+      <span class="badge">
+        <i class="fas fa-magnifying-glass"></i> Live Tool
+      </span>
+
+      <h2>Password Strength Checker</h2>
+
+      <p class="intro">
+        Type your password below and get instant feedback.
+      </p>
+
+      <div class="pw-input-row">
+        <div class="pw-field-wrap">
+          <input type="password" id="pwInput" placeholder="Enter a password to analyze..."/>
+
+          <button class="pw-toggle" id="pwToggle">
+            <i class="fas fa-eye" id="eyeIcon"></i>
+          </button>
+        </div>
+
+        <button class="check-btn" onclick="checkPassword()">
+          <i class="fas fa-bolt"></i> Analyze
+        </button>
+      </div>
+
+      <div class="strength-meter">
+        <div class="strength-header">
+          <span>Password Strength</span>
+          <span class="strength-label" id="strengthLabel">—</span>
+        </div>
+
+        <div class="bars-row">
+          <div class="bar-seg" id="b1"></div>
+          <div class="bar-seg" id="b2"></div>
+          <div class="bar-seg" id="b3"></div>
+          <div class="bar-seg" id="b4"></div>
+          <div class="bar-seg" id="b5"></div>
+        </div>
+      </div>
+
+      <div class="results-grid" id="resultsGrid" style="display:none;"></div>
+
+      <div class="tips-box" id="tipsBox">
+        <h4><i class="fas fa-lightbulb"></i> Improvement Tips</h4>
+        <ul class="tips-list" id="tipsList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="section-wrap">
+      <span class="badge" style="display:block;text-align:center;margin:0 auto 1.25rem;">
+        <i class="fas fa-users"></i> Group Project
+      </span>
+
+      <h2>Meet the Team</h2>
+      <p class="intro">The people who built SecureCheck.</p>
+
+      <div class="team-grid">
+
+        <div class="member-card reveal">
+          <div class="member-photo">
+            <img src="assets/members/member1.JPG" alt="Photo" class="m-img"/>
+            <i class="fas fa-user photo-ph"></i>
+          </div>
+
+          <div class="member-name">Shantanu Swaraj</div>
+          <div class="member-role">Project Lead</div>
+
+          <p class="member-desc">
+            Managed the project structure, planning, testing, and teamwork coordination.
+          </p>
+        </div>
+
+        <div class="member-card reveal">
+          <div class="member-photo">
+            <img src="assets/members/member2.JPG" alt="Photo" class="m-img"/>
+            <i class="fas fa-user photo-ph"></i>
+          </div>
+
+          <div class="member-name">Somi</div>
+          <div class="member-role">CSS & JavaScript</div>
+
+          <p class="member-desc">
+            Worked on website styling, animations, and interactive features.
+          </p>
+        </div>
+
+        <div class="member-card reveal">
+          <div class="member-photo">
+            <img src="assets/members/member3.JPG" alt="Photo" class="m-img"/>
+            <i class="fas fa-user photo-ph"></i>
+          </div>
+
+          <div class="member-name">Diwanshu</div>
+          <div class="member-role">HTML Developer</div>
+
+          <p class="member-desc">
+            Designed and structured the website layout and sections.
+          </p>
+        </div>
+
+        <div class="member-card reveal">
+          <div class="member-photo">
+            <img src="assets/members/member4.JPG" alt="Photo" class="m-img"/>
+            <i class="fas fa-user photo-ph"></i>
+          </div>
+
+          <div class="member-name">Samarth</div>
+          <div class="member-role">JavaScript Developer</div>
+
+          <p class="member-desc">
+            Helped build password analysis logic and dynamic UI updates.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Secure<span>Check</span></div>
+    <p>Built with Python & ❤️ by the team · Group Project 2025</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
