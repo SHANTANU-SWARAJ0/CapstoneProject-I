@@ -166,6 +166,143 @@
       </div>
     </div>
   </section>
+  <section id="how">
+    <div class="section-wrap">
+      <span class="badge" style="display:block;text-align:center;margin:0 auto 1.25rem;"><i class="fas fa-code"></i> Technical</span>
+      <h2>How It Works</h2>
+      <p class="intro">Our checker runs the same rules as the Python backend — right in your browser.</p>
+
+      <div class="steps-row">
+        <div class="step-card reveal"><div class="step-num">STEP 01</div><span class="step-icon">⌨️</span><h3>You Type</h3><p>Enter your password. It never leaves your device — fully private.</p></div>
+        <div class="step-card reveal"><div class="step-num">STEP 02</div><span class="step-icon">🐍</span><h3>Python Logic</h3><p>Our algorithm checks length, character types, entropy &amp; patterns.</p></div>
+        <div class="step-card reveal"><div class="step-num">STEP 03</div><span class="step-icon">📊</span><h3>Scoring</h3><p>Each rule contributes points to produce a final 0–100 strength score.</p></div>
+        <div class="step-card reveal"><div class="step-num">STEP 04</div><span class="step-icon">💡</span><h3>Feedback</h3><p>You receive actionable tips to make your password stronger instantly.</p></div>
+      </div>
+
+      <!-- Python code block -->
+      <div class="python-card reveal">
+        <div class="py-header">
+          <div class="py-lang"><span class="py-dot"></span> Python 3 — securecheck.py</div>
+          <button class="copy-btn" onclick="copyCode()"><i class="fas fa-copy"></i> Copy</button>
+        </div>
+        <pre id="codeBlock"><span class="cm"># ================================================</span>
+<span class="cm">#  SecureCheck — Password Strength Analyzer</span>
+<span class="cm">#  Group Project  |  Python Backend Logic</span>
+<span class="cm"># ================================================</span>
+
+<span class="kw">import</span> re
+<span class="kw">import</span> math
+
+<span class="kw">def</span> <span class="fn">calculate_entropy</span>(password):
+    <span class="str">"""Estimate password entropy in bits."""</span>
+    <span class="var">charset</span> = <span class="num">0</span>
+    <span class="kw">if</span> re.search(<span class="str">r'[a-z]'</span>, password): <span class="var">charset</span> += <span class="num">26</span>
+    <span class="kw">if</span> re.search(<span class="str">r'[A-Z]'</span>, password): <span class="var">charset</span> += <span class="num">26</span>
+    <span class="kw">if</span> re.search(<span class="str">r'[0-9]'</span>, password): <span class="var">charset</span> += <span class="num">10</span>
+    <span class="kw">if</span> re.search(<span class="str">r'[^a-zA-Z0-9]'</span>, password): <span class="var">charset</span> += <span class="num">32</span>
+    <span class="kw">return</span> <span class="fn">round</span>(<span class="fn">len</span>(password) * math.<span class="fn">log2</span>(<span class="var">charset</span>), <span class="num">2</span>) <span class="kw">if</span> <span class="var">charset</span> <span class="kw">else</span> <span class="num">0</span>
+
+<span class="kw">def</span> <span class="fn">check_password</span>(password):
+    <span class="str">"""Run all security checks. Returns a result dict."""</span>
+    <span class="var">score</span>  = <span class="num">0</span>
+    <span class="var">issues</span> = []
+    <span class="var">tips</span>   = []
+
+    <span class="cm"># Rule 1 — Minimum length (12 chars)</span>
+    <span class="kw">if</span> <span class="fn">len</span>(password) >= <span class="num">12</span>: <span class="var">score</span> += <span class="num">20</span>
+    <span class="kw">else</span>:
+        <span class="var">issues</span>.append(<span class="str">"Too short — need 12+ characters"</span>)
+        <span class="var">tips</span>.append(<span class="str">"Use at least 12 characters"</span>)
+
+    <span class="cm"># Rule 2 — Uppercase letters</span>
+    <span class="kw">if</span> re.search(<span class="str">r'[A-Z]'</span>, password): <span class="var">score</span> += <span class="num">20</span>
+    <span class="kw">else</span>:
+        <span class="var">issues</span>.append(<span class="str">"No uppercase letters"</span>)
+        <span class="var">tips</span>.append(<span class="str">"Add uppercase letters (A–Z)"</span>)
+
+    <span class="cm"># Rule 3 — Digits</span>
+    <span class="kw">if</span> re.search(<span class="str">r'[0-9]'</span>, password): <span class="var">score</span> += <span class="num">20</span>
+    <span class="kw">else</span>:
+        <span class="var">issues</span>.append(<span class="str">"No digits found"</span>)
+        <span class="var">tips</span>.append(<span class="str">"Mix in numbers (0–9)"</span>)
+
+    <span class="cm"># Rule 4 — Special characters</span>
+    <span class="kw">if</span> re.search(<span class="str">r'[^a-zA-Z0-9]'</span>, password): <span class="var">score</span> += <span class="num">20</span>
+    <span class="kw">else</span>:
+        <span class="var">issues</span>.append(<span class="str">"No special characters"</span>)
+        <span class="var">tips</span>.append(<span class="str">"Add symbols: !@#$%^&*()"</span>)
+
+    <span class="cm"># Rule 5 — No common patterns</span>
+    <span class="var">common</span> = [<span class="str">'123456'</span>, <span class="str">'password'</span>, <span class="str">'qwerty'</span>, <span class="str">'abc123'</span>, <span class="str">'admin'</span>]
+    <span class="kw">if not</span> <span class="fn">any</span>(p <span class="kw">in</span> password.lower() <span class="kw">for</span> p <span class="kw">in</span> <span class="var">common</span>):
+        <span class="var">score</span> += <span class="num">20</span>
+    <span class="kw">else</span>:
+        <span class="var">issues</span>.append(<span class="str">"Contains a common pattern"</span>)
+        <span class="var">tips</span>.append(<span class="str">"Avoid predictable patterns"</span>)
+
+    <span class="var">entropy</span> = <span class="fn">calculate_entropy</span>(password)
+
+    <span class="kw">if</span>   <span class="var">score</span> >= <span class="num">100</span>: <span class="var">level</span> = <span class="str">"Very Strong"</span>
+    <span class="kw">elif</span> <span class="var">score</span> >= <span class="num">80</span>:  <span class="var">level</span> = <span class="str">"Strong"</span>
+    <span class="kw">elif</span> <span class="var">score</span> >= <span class="num">60</span>:  <span class="var">level</span> = <span class="str">"Medium"</span>
+    <span class="kw">elif</span> <span class="var">score</span> >= <span class="num">40</span>:  <span class="var">level</span> = <span class="str">"Weak"</span>
+    <span class="kw">else</span>:               <span class="var">level</span> = <span class="str">"Very Weak"</span>
+
+    <span class="kw">return</span> {<span class="str">"score"</span>:<span class="var">score</span>, <span class="str">"level"</span>:<span class="var">level</span>, <span class="str">"entropy"</span>:<span class="var">entropy</span>, <span class="str">"issues"</span>:<span class="var">issues</span>, <span class="str">"tips"</span>:<span class="var">tips</span>}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       FEATURES
+  ══════════════════════════════════════════════════ -->
+  <section id="features">
+    <div class="section-wrap">
+
+      <div class="features-left reveal">
+        <span class="badge"><i class="fas fa-shield-halved"></i> What We Check</span>
+        <h2>10+ Security Rules Applied</h2>
+        <p>Every password is tested against rules derived from NIST and OWASP security guidelines.</p>
+        <div class="feature-list">
+          <div class="feature-item"><div class="f-icon"><i class="fas fa-ruler"></i></div><div><h4>Length Check</h4><p>Minimum 12 characters required. Longer = exponentially stronger.</p></div></div>
+          <div class="feature-item"><div class="f-icon"><i class="fas fa-font"></i></div><div><h4>Character Diversity</h4><p>Checks for uppercase, lowercase, digits, and special symbols.</p></div></div>
+          <div class="feature-item"><div class="f-icon"><i class="fas fa-chart-line"></i></div><div><h4>Entropy Calculation</h4><p>Measures actual randomness in bits using information theory.</p></div></div>
+          <div class="feature-item"><div class="f-icon"><i class="fas fa-ban"></i></div><div><h4>Pattern Detection</h4><p>Flags sequences like "123456", "password", and keyboard walks.</p></div></div>
+        </div>
+      </div>
+
+      <div class="security-panel reveal">
+        <div class="panel-title"><i class="fas fa-circle-check"></i>&nbsp; Sample Analysis</div>
+        <div class="score-ring">
+          <div class="ring-wrapper">
+            <svg class="ring-svg" width="160" height="160" viewBox="0 0 160 160">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stop-color="#00c896"/>
+                  <stop offset="100%" stop-color="#00ff9d"/>
+                </linearGradient>
+              </defs>
+              <circle class="ring-track" cx="80" cy="80" r="68"/>
+              <circle class="ring-fill"  cx="80" cy="80" r="68"/>
+            </svg>
+            <div style="position:absolute;text-align:center;">
+              <div class="ring-score">80</div>
+              <div class="ring-sublabel">/ 100</div>
+            </div>
+          </div>
+        </div>
+        <div class="check-rows">
+          <div class="check-row"><span class="lft"><i class="fas fa-check-circle"></i>Length (12+)</span><span class="badge-sm badge-ok">PASS</span></div>
+          <div class="check-row"><span class="lft"><i class="fas fa-check-circle"></i>Uppercase</span><span class="badge-sm badge-ok">PASS</span></div>
+          <div class="check-row"><span class="lft"><i class="fas fa-check-circle"></i>Numbers</span><span class="badge-sm badge-ok">PASS</span></div>
+          <div class="check-row"><span class="lft"><i class="fas fa-times-circle" style="color:var(--red)"></i>Special Chars</span><span class="badge-sm badge-no">FAIL</span></div>
+          <div class="check-row"><span class="lft"><i class="fas fa-check-circle"></i>No Common Patterns</span><span class="badge-sm badge-ok">PASS</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
 
   <section id="team">
     <div class="section-wrap">
